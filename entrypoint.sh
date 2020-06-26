@@ -6,16 +6,7 @@
 # We only require and access key and secret as a sanity check.  It's up to the 
 # caller to attend to other details such as session tokens and regions depending
 # on their own context.
-if [[ -z "$PULUMI_ACCESS_TOKEN" ]]; then 
-  echo >&2 "ERROR : PULUMI_ACCESS_TOKEN must be set"
-  exit 1
-fi
-
-
-
-
-# Access token is needed in order to run Pulumi commands
-if [[ -z "$AWS_ACCESS_KEY_ID" || -z "$AWS_SECRET_ACCESS_KEY"]]; then 
+if [[ -z "$AWS_ACCESS_KEY_ID" || -z "$AWS_SECRET_ACCESS_KEY" ]]; then 
   cat >&2 <<EOF 
 ERROR : AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY must be set.
         
@@ -24,6 +15,12 @@ ERROR : AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY must be set.
         You may also consider setting AWS_DEFAULT_REGION but that can also 
         be supplied using Pulumi's stack config.
 EOF
+  exit 1
+fi
+
+# Access token is needed in order to run Pulumi commands
+if [[ -z "$PULUMI_ACCESS_TOKEN" ]]; then 
+  echo >&2 "ERROR : PULUMI_ACCESS_TOKEN must be set"
   exit 1
 fi
 
