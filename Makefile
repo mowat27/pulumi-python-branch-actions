@@ -22,6 +22,12 @@ run: build
 		-v "$(PWD):/code" \
 		mowat27/pulumi-python-branch-actions:dev
 
+sh: build
+	@docker run --rm -it \
+		-e PULUMI_ACCESS_TOKEN \
+		-v "$(PWD):/code" \
+		mowat27/pulumi-python-branch-actions:dev /bin/bash
+
 clean: 
 	rm -f $(DOCKER_BUILD_SENTINAL)
 
