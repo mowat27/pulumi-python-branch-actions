@@ -30,7 +30,8 @@ set -euo pipefail
 IFS=$'\n\t'
 
 function output {
-  echo "::set-output name=$1::$2"
+  # Removes newlines beacuse GH Actions doesn't like them
+  echo "::set-output name=$1::${2//[$'\r\n']/ }"
 }
 
 branch=$(git rev-parse --abbrev-ref HEAD)
